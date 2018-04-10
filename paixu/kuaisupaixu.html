@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Page Title</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  请按f12打开控制台查看
+  <script>
+    /**
+     * 冒泡排序
+     * 从里向外读，拿最后一个数跟其前面的数比较,只用比到还没被正确排序的索引处即可，因为再之前索引的已经在之前的排序中找到了自己的位置
+     * 这样比较数组长度-1次
+     */
+    function mp (arr) {
+      var start = new Date().getTime()
+      const len = arr.length
+      let i
+      let j
+
+      //第一层循环： 表明要比较的次数，比如list.count个数，肯定要比较count-1次
+      for (i = 0; i < len - 1; i++) {
+        //list.count-1：取数据最后一个数下标，j>i: 从后往前的的下标一定大于从前往后的下标，否则就超越了。
+        for (j = len - 1; j > i; j--) {
+          if (arr[j] < arr[i]) {
+            var temp = arr[i]
+            arr[i] = arr[j]
+            arr[j] = temp
+          }
+        }
+      }
+
+      console.log('冒泡排序', arr, new Date().getTime() - start)
+    }
+
+    /**
+     * 快速排序
+     * 
+     */
+    function ks(arr) {
+      if (arr.length <= 1) {
+        return arr
+      }
+
+      let midIndex = Math.floor(arr.length / 2)
+      let flag = arr.splice(midIndex, 1)[0]
+      let leftArr = []
+      let rightArr = []
+      let len = arr.length
+
+      for (let i = 0; i < len; i++) {
+        arr[i] < flag ? leftArr.push(arr[i]) : rightArr.push(arr[i])
+      }
+
+      return ks(leftArr).concat([flag], ks(rightArr))
+    }
+
+    function doks(arr) {
+      var start = new Date().getTime()
+      var res = ks(arr)
+      console.log('快速排序', res, new Date().getTime() - start)
+    }
+
+    var array = []
+
+    for (var index = 0; index < 10000; index++) {
+      array.push(Math.ceil(Math.random() * 10000))
+    }
+
+    mp(JSON.parse(JSON.stringify(array)))
+    doks(JSON.parse(JSON.stringify(array)))
+  </script>
+</body>
+</html>
